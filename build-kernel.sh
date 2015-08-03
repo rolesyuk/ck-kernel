@@ -2,15 +2,15 @@
 
 #DEPENDENCIES="kernel-package libncurses5 libncurses5-dev build-essential patch fakeroot bc"
 
-KERNEL_MAJOR="4.0"
-KERNEL_MINOR="9"
+KERNEL_MAJOR="4.1"
+KERNEL_MINOR="4"
 BFS="ck1"
 BFQ="v7r8"
 PREEMPT_RT=
 
 #CROSS_COMPILER_PREFIX=$(readlink -f $(dirname $0)/gcc-linaro-4.9-2014.11-x86_64_arm-linux-gnueabihf/bin)/arm-linux-gnueabihf-
 
-CONFIG="config-3.16.0-44-generic"
+CONFIG="config-3.19.0-25-generic"
 
 big_echo() {
 	echo
@@ -55,7 +55,7 @@ fi
 
 PATCHES="../000*.patch"
 if [ -n "${BFS}" ]; then
-	PATCHES="../patch-${KERNEL_MAJOR}-${BFS}.patch ../bfs462-rtmn-fix.patch ../bfs462-update_inittask.patch ${PATCHES}"
+	PATCHES="../patch-${KERNEL_MAJOR}-${BFS}.patch ${PATCHES}"
 fi
 if [ -n "${PREEMPT_RT}" ]; then
 	PATCHES="../patch-${KERNEL_MAJOR}.${KERNEL_MINOR}-${PREEMPT_RT}.patch ${PATCHES}"
