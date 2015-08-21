@@ -1,7 +1,7 @@
-Index: linux-4.1-ck1/arch/powerpc/platforms/cell/spufs/sched.c
+Index: linux-4.1-ck2/arch/powerpc/platforms/cell/spufs/sched.c
 ===================================================================
---- linux-4.1-ck1.orig/arch/powerpc/platforms/cell/spufs/sched.c	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/arch/powerpc/platforms/cell/spufs/sched.c	2015-08-02 19:51:24.895823459 +1000
+--- linux-4.1-ck2.orig/arch/powerpc/platforms/cell/spufs/sched.c	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/arch/powerpc/platforms/cell/spufs/sched.c	2015-08-09 16:50:16.871987145 +1000
 @@ -64,11 +64,6 @@ static struct timer_list spusched_timer;
  static struct timer_list spuloadavg_timer;
  
@@ -14,10 +14,10 @@ Index: linux-4.1-ck1/arch/powerpc/platforms/cell/spufs/sched.c
   * Frequency of the spu scheduler tick.  By default we do one SPU scheduler
   * tick for every 10 CPU scheduler ticks.
   */
-Index: linux-4.1-ck1/Documentation/scheduler/sched-BFS.txt
+Index: linux-4.1-ck2/Documentation/scheduler/sched-BFS.txt
 ===================================================================
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.1-ck1/Documentation/scheduler/sched-BFS.txt	2015-08-02 19:51:24.895823459 +1000
++++ linux-4.1-ck2/Documentation/scheduler/sched-BFS.txt	2015-08-09 16:50:16.871987145 +1000
 @@ -0,0 +1,347 @@
 +BFS - The Brain Fuck Scheduler by Con Kolivas.
 +
@@ -366,10 +366,10 @@ Index: linux-4.1-ck1/Documentation/scheduler/sched-BFS.txt
 +
 +
 +Con Kolivas <kernel@kolivas.org> Tue, 5 Apr 2011
-Index: linux-4.1-ck1/Documentation/sysctl/kernel.txt
+Index: linux-4.1-ck2/Documentation/sysctl/kernel.txt
 ===================================================================
---- linux-4.1-ck1.orig/Documentation/sysctl/kernel.txt	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/Documentation/sysctl/kernel.txt	2015-08-02 19:51:24.895823459 +1000
+--- linux-4.1-ck2.orig/Documentation/sysctl/kernel.txt	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/Documentation/sysctl/kernel.txt	2015-08-09 16:50:16.871987145 +1000
 @@ -38,6 +38,7 @@ show up in /proc/sys/kernel:
  - hung_task_timeout_secs
  - hung_task_warnings
@@ -424,10 +424,10 @@ Index: linux-4.1-ck1/Documentation/sysctl/kernel.txt
  rtsig-max & rtsig-nr:
  
  The file rtsig-max can be used to tune the maximum number
-Index: linux-4.1-ck1/fs/proc/base.c
+Index: linux-4.1-ck2/fs/proc/base.c
 ===================================================================
---- linux-4.1-ck1.orig/fs/proc/base.c	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/fs/proc/base.c	2015-08-02 19:51:24.896823476 +1000
+--- linux-4.1-ck2.orig/fs/proc/base.c	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/fs/proc/base.c	2015-08-09 16:50:16.872987139 +1000
 @@ -312,7 +312,7 @@ static int proc_pid_schedstat(struct seq
  			      struct pid *pid, struct task_struct *task)
  {
@@ -437,10 +437,10 @@ Index: linux-4.1-ck1/fs/proc/base.c
  		   (unsigned long long)task->sched_info.run_delay,
  		   task->sched_info.pcount);
  
-Index: linux-4.1-ck1/include/linux/init_task.h
+Index: linux-4.1-ck2/include/linux/init_task.h
 ===================================================================
---- linux-4.1-ck1.orig/include/linux/init_task.h	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/include/linux/init_task.h	2015-08-02 19:51:24.896823476 +1000
+--- linux-4.1-ck2.orig/include/linux/init_task.h	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/include/linux/init_task.h	2015-08-09 16:50:16.872987139 +1000
 @@ -156,8 +156,6 @@ extern struct task_group root_task_group
  # define INIT_VTIME(tsk)
  #endif
@@ -532,10 +532,10 @@ Index: linux-4.1-ck1/include/linux/init_task.h
  
  #define INIT_CPU_TIMERS(cpu_timers)					\
  {									\
-Index: linux-4.1-ck1/include/linux/ioprio.h
+Index: linux-4.1-ck2/include/linux/ioprio.h
 ===================================================================
---- linux-4.1-ck1.orig/include/linux/ioprio.h	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/include/linux/ioprio.h	2015-08-02 19:51:24.896823476 +1000
+--- linux-4.1-ck2.orig/include/linux/ioprio.h	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/include/linux/ioprio.h	2015-08-09 16:50:16.872987139 +1000
 @@ -52,6 +52,8 @@ enum {
   */
  static inline int task_nice_ioprio(struct task_struct *task)
@@ -545,10 +545,10 @@ Index: linux-4.1-ck1/include/linux/ioprio.h
  	return (task_nice(task) + 20) / 5;
  }
  
-Index: linux-4.1-ck1/include/linux/sched.h
+Index: linux-4.1-ck2/include/linux/sched.h
 ===================================================================
---- linux-4.1-ck1.orig/include/linux/sched.h	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/include/linux/sched.h	2015-08-02 19:51:24.896823476 +1000
+--- linux-4.1-ck2.orig/include/linux/sched.h	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/include/linux/sched.h	2015-08-09 16:50:16.872987139 +1000
 @@ -330,8 +330,6 @@ extern void init_idle_bootup_task(struct
  
  extern cpumask_var_t cpu_isolated_map;
@@ -694,10 +694,10 @@ Index: linux-4.1-ck1/include/linux/sched.h
  {
  }
  
-Index: linux-4.1-ck1/init/Kconfig
+Index: linux-4.1-ck2/init/Kconfig
 ===================================================================
---- linux-4.1-ck1.orig/init/Kconfig	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/init/Kconfig	2015-08-02 19:51:24.897823494 +1000
+--- linux-4.1-ck2.orig/init/Kconfig	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/init/Kconfig	2015-08-09 16:50:16.872987139 +1000
 @@ -28,6 +28,20 @@ config BUILDTIME_EXTABLE_SORT
  
  menu "General setup"
@@ -826,10 +826,10 @@ Index: linux-4.1-ck1/init/Kconfig
  
  config SLUB_CPU_PARTIAL
  	default y
-Index: linux-4.1-ck1/init/main.c
+Index: linux-4.1-ck2/init/main.c
 ===================================================================
---- linux-4.1-ck1.orig/init/main.c	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/init/main.c	2015-08-02 19:51:24.897823494 +1000
+--- linux-4.1-ck2.orig/init/main.c	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/init/main.c	2015-08-09 16:50:16.873987133 +1000
 @@ -802,7 +802,6 @@ int __init_or_module do_one_initcall(ini
  	return ret;
  }
@@ -847,10 +847,10 @@ Index: linux-4.1-ck1/init/main.c
  	if (ramdisk_execute_command) {
  		ret = run_init_process(ramdisk_execute_command);
  		if (!ret)
-Index: linux-4.1-ck1/kernel/delayacct.c
+Index: linux-4.1-ck2/kernel/delayacct.c
 ===================================================================
---- linux-4.1-ck1.orig/kernel/delayacct.c	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/kernel/delayacct.c	2015-08-02 19:51:24.897823494 +1000
+--- linux-4.1-ck2.orig/kernel/delayacct.c	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/kernel/delayacct.c	2015-08-09 16:50:16.873987133 +1000
 @@ -104,7 +104,7 @@ int __delayacct_add_tsk(struct taskstats
  	 */
  	t1 = tsk->sched_info.pcount;
@@ -860,10 +860,10 @@ Index: linux-4.1-ck1/kernel/delayacct.c
  
  	d->cpu_count += t1;
  
-Index: linux-4.1-ck1/kernel/exit.c
+Index: linux-4.1-ck2/kernel/exit.c
 ===================================================================
---- linux-4.1-ck1.orig/kernel/exit.c	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/kernel/exit.c	2015-08-02 19:51:24.897823494 +1000
+--- linux-4.1-ck2.orig/kernel/exit.c	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/kernel/exit.c	2015-08-09 16:50:16.873987133 +1000
 @@ -135,7 +135,7 @@ static void __exit_signal(struct task_st
  	sig->inblock += task_io_get_inblock(tsk);
  	sig->oublock += task_io_get_oublock(tsk);
@@ -873,10 +873,10 @@ Index: linux-4.1-ck1/kernel/exit.c
  	sig->nr_threads--;
  	__unhash_process(tsk, group_dead);
  	write_sequnlock(&sig->stats_lock);
-Index: linux-4.1-ck1/kernel/sysctl.c
+Index: linux-4.1-ck2/kernel/sysctl.c
 ===================================================================
---- linux-4.1-ck1.orig/kernel/sysctl.c	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/kernel/sysctl.c	2015-08-02 19:51:24.898823512 +1000
+--- linux-4.1-ck2.orig/kernel/sysctl.c	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/kernel/sysctl.c	2015-08-09 16:50:16.873987133 +1000
 @@ -124,7 +124,12 @@ static int __maybe_unused one = 1;
  static int __maybe_unused two = 2;
  static int __maybe_unused four = 4;
@@ -943,10 +943,10 @@ Index: linux-4.1-ck1/kernel/sysctl.c
  #if defined(CONFIG_S390) && defined(CONFIG_SMP)
  	{
  		.procname	= "spin_retry",
-Index: linux-4.1-ck1/lib/Kconfig.debug
+Index: linux-4.1-ck2/lib/Kconfig.debug
 ===================================================================
---- linux-4.1-ck1.orig/lib/Kconfig.debug	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/lib/Kconfig.debug	2015-08-02 19:51:24.898823512 +1000
+--- linux-4.1-ck2.orig/lib/Kconfig.debug	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/lib/Kconfig.debug	2015-08-09 16:50:16.873987133 +1000
 @@ -1230,7 +1230,7 @@ config TORTURE_TEST
  
  config RCU_TORTURE_TEST
@@ -956,10 +956,10 @@ Index: linux-4.1-ck1/lib/Kconfig.debug
  	select TORTURE_TEST
  	select SRCU
  	default n
-Index: linux-4.1-ck1/include/linux/jiffies.h
+Index: linux-4.1-ck2/include/linux/jiffies.h
 ===================================================================
---- linux-4.1-ck1.orig/include/linux/jiffies.h	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/include/linux/jiffies.h	2015-08-02 19:51:24.898823512 +1000
+--- linux-4.1-ck2.orig/include/linux/jiffies.h	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/include/linux/jiffies.h	2015-08-09 16:50:16.874987127 +1000
 @@ -163,7 +163,7 @@ static inline u64 get_jiffies_64(void)
   * Have the 32 bit jiffies value wrap 5 minutes after boot
   * so jiffies wrap bugs show up earlier.
@@ -969,10 +969,10 @@ Index: linux-4.1-ck1/include/linux/jiffies.h
  
  /*
   * Change timeval to jiffies, trying to avoid the
-Index: linux-4.1-ck1/drivers/cpufreq/cpufreq.c
+Index: linux-4.1-ck2/drivers/cpufreq/cpufreq.c
 ===================================================================
---- linux-4.1-ck1.orig/drivers/cpufreq/cpufreq.c	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/drivers/cpufreq/cpufreq.c	2015-08-02 19:51:24.898823512 +1000
+--- linux-4.1-ck2.orig/drivers/cpufreq/cpufreq.c	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/drivers/cpufreq/cpufreq.c	2015-08-09 16:50:16.874987127 +1000
 @@ -25,6 +25,7 @@
  #include <linux/kernel_stat.h>
  #include <linux/module.h>
@@ -994,10 +994,10 @@ Index: linux-4.1-ck1/drivers/cpufreq/cpufreq.c
  	return retval;
  }
  EXPORT_SYMBOL_GPL(__cpufreq_driver_target);
-Index: linux-4.1-ck1/drivers/cpufreq/cpufreq_ondemand.c
+Index: linux-4.1-ck2/drivers/cpufreq/cpufreq_ondemand.c
 ===================================================================
---- linux-4.1-ck1.orig/drivers/cpufreq/cpufreq_ondemand.c	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/drivers/cpufreq/cpufreq_ondemand.c	2015-08-02 19:51:24.899823530 +1000
+--- linux-4.1-ck2.orig/drivers/cpufreq/cpufreq_ondemand.c	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/drivers/cpufreq/cpufreq_ondemand.c	2015-08-09 16:50:16.874987127 +1000
 @@ -19,7 +19,7 @@
  #include "cpufreq_governor.h"
  
@@ -1016,11 +1016,11 @@ Index: linux-4.1-ck1/drivers/cpufreq/cpufreq_ondemand.c
   * (default), then we try to increase frequency. Else, we adjust the frequency
   * proportional to load.
   */
-Index: linux-4.1-ck1/kernel/sched/bfs.c
+Index: linux-4.1-ck2/kernel/sched/bfs.c
 ===================================================================
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.1-ck1/kernel/sched/bfs.c	2015-08-02 19:51:24.901823565 +1000
-@@ -0,0 +1,7421 @@
++++ linux-4.1-ck2/kernel/sched/bfs.c	2015-08-09 16:50:56.258754730 +1000
+@@ -0,0 +1,7412 @@
 +/*
 + *  kernel/sched/bfs.c, was kernel/sched.c
 + *
@@ -1157,7 +1157,7 @@ Index: linux-4.1-ck1/kernel/sched/bfs.c
 +
 +void print_scheduler_version(void)
 +{
-+	printk(KERN_INFO "BFS CPU scheduler v0.463 by Con Kolivas.\n");
++	printk(KERN_INFO "BFS CPU scheduler v0.464 by Con Kolivas.\n");
 +}
 +
 +/*
@@ -1999,13 +1999,6 @@ Index: linux-4.1-ck1/kernel/sched/bfs.c
 +	p->on_rq = 0;
 +	grq.nr_running--;
 +	clear_sticky(p);
-+}
-+
-+static ATOMIC_NOTIFIER_HEAD(task_migration_notifier);
-+
-+void register_task_migration_notifier(struct notifier_block *n)
-+{
-+	atomic_notifier_chain_register(&task_migration_notifier, n);
 +}
 +
 +#ifdef CONFIG_SMP
@@ -4391,10 +4384,12 @@ Index: linux-4.1-ck1/kernel/sched/bfs.c
 +{
 +	struct task_struct *prev, *next, *idle;
 +	unsigned long *switch_count;
-+	bool deactivate = false;
++	bool deactivate;
 +	struct rq *rq;
 +	int cpu;
 +
++need_resched:
++	deactivate = false;
 +	preempt_disable();
 +	cpu = smp_processor_id();
 +	rq = cpu_rq(cpu);
@@ -4439,6 +4434,17 @@ Index: linux-4.1-ck1/kernel/sched/bfs.c
 +			}
 +		}
 +		switch_count = &prev->nvcsw;
++	}
++
++	/*
++	 * If we are going to sleep and we have plugged IO queued, make
++	 * sure to submit it to avoid deadlocks.
++	 */
++	if (unlikely(deactivate && blk_needs_flush_plug(prev))) {
++		grq_unlock_irq();
++		preempt_enable_no_resched();
++		blk_schedule_flush_plug(prev);
++		goto need_resched;
 +	}
 +
 +	update_clocks(rq);
@@ -4531,23 +4537,8 @@ Index: linux-4.1-ck1/kernel/sched/bfs.c
 +	sched_preempt_enable_no_resched();
 +}
 +
-+static inline void sched_submit_work(struct task_struct *tsk)
-+{
-+	if (!tsk->state || tsk_is_pi_blocked(tsk))
-+		return;
-+	/*
-+	 * If we are going to sleep and we have plugged IO queued,
-+	 * make sure to submit it to avoid deadlocks.
-+	 */
-+	if (blk_needs_flush_plug(tsk))
-+		blk_schedule_flush_plug(tsk);
-+}
-+
 +asmlinkage __visible void __sched schedule(void)
 +{
-+	struct task_struct *tsk = current;
-+
-+	sched_submit_work(tsk);
 +	do {
 +		__schedule();
 +	} while (need_resched());
@@ -8442,10 +8433,10 @@ Index: linux-4.1-ck1/kernel/sched/bfs.c
 +	return smt_gain;
 +}
 +#endif
-Index: linux-4.1-ck1/include/uapi/linux/sched.h
+Index: linux-4.1-ck2/include/uapi/linux/sched.h
 ===================================================================
---- linux-4.1-ck1.orig/include/uapi/linux/sched.h	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/include/uapi/linux/sched.h	2015-08-02 19:51:24.901823565 +1000
+--- linux-4.1-ck2.orig/include/uapi/linux/sched.h	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/include/uapi/linux/sched.h	2015-08-09 16:50:16.876987115 +1000
 @@ -37,9 +37,16 @@
  #define SCHED_FIFO		1
  #define SCHED_RR		2
@@ -8464,10 +8455,10 @@ Index: linux-4.1-ck1/include/uapi/linux/sched.h
  
  /* Can be ORed in to make sure the process is reverted back to SCHED_NORMAL on fork */
  #define SCHED_RESET_ON_FORK     0x40000000
-Index: linux-4.1-ck1/kernel/stop_machine.c
+Index: linux-4.1-ck2/kernel/stop_machine.c
 ===================================================================
---- linux-4.1-ck1.orig/kernel/stop_machine.c	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/kernel/stop_machine.c	2015-08-02 19:51:24.901823565 +1000
+--- linux-4.1-ck2.orig/kernel/stop_machine.c	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/kernel/stop_machine.c	2015-08-09 16:50:16.876987115 +1000
 @@ -41,7 +41,8 @@ struct cpu_stopper {
  };
  
@@ -8478,10 +8469,10 @@ Index: linux-4.1-ck1/kernel/stop_machine.c
  static bool stop_machine_initialized = false;
  
  /*
-Index: linux-4.1-ck1/drivers/cpufreq/cpufreq_conservative.c
+Index: linux-4.1-ck2/drivers/cpufreq/cpufreq_conservative.c
 ===================================================================
---- linux-4.1-ck1.orig/drivers/cpufreq/cpufreq_conservative.c	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/drivers/cpufreq/cpufreq_conservative.c	2015-08-02 19:51:24.901823565 +1000
+--- linux-4.1-ck2.orig/drivers/cpufreq/cpufreq_conservative.c	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/drivers/cpufreq/cpufreq_conservative.c	2015-08-09 16:50:16.877987110 +1000
 @@ -15,8 +15,8 @@
  #include "cpufreq_governor.h"
  
@@ -8493,10 +8484,10 @@ Index: linux-4.1-ck1/drivers/cpufreq/cpufreq_conservative.c
  #define DEF_FREQUENCY_STEP			(5)
  #define DEF_SAMPLING_DOWN_FACTOR		(1)
  #define MAX_SAMPLING_DOWN_FACTOR		(10)
-Index: linux-4.1-ck1/kernel/time/Kconfig
+Index: linux-4.1-ck2/kernel/time/Kconfig
 ===================================================================
---- linux-4.1-ck1.orig/kernel/time/Kconfig	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/kernel/time/Kconfig	2015-08-02 19:51:24.901823565 +1000
+--- linux-4.1-ck2.orig/kernel/time/Kconfig	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/kernel/time/Kconfig	2015-08-09 16:50:16.877987110 +1000
 @@ -89,7 +89,7 @@ config NO_HZ_IDLE
  config NO_HZ_FULL
  	bool "Full dynticks system (tickless)"
@@ -8506,10 +8497,10 @@ Index: linux-4.1-ck1/kernel/time/Kconfig
  	# We need at least one periodic CPU for timekeeping
  	depends on SMP
  	# RCU_USER_QS dependency
-Index: linux-4.1-ck1/kernel/sched/Makefile
+Index: linux-4.1-ck2/kernel/sched/Makefile
 ===================================================================
---- linux-4.1-ck1.orig/kernel/sched/Makefile	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/kernel/sched/Makefile	2015-08-02 19:51:24.902823582 +1000
+--- linux-4.1-ck2.orig/kernel/sched/Makefile	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/kernel/sched/Makefile	2015-08-09 16:50:16.877987110 +1000
 @@ -11,11 +11,16 @@ ifneq ($(CONFIG_SCHED_OMIT_FRAME_POINTER
  CFLAGS_core.o := $(PROFILING) -fno-omit-frame-pointer
  endif
@@ -8530,10 +8521,10 @@ Index: linux-4.1-ck1/kernel/sched/Makefile
 +obj-y += wait.o completion.o idle.o
 +obj-$(CONFIG_SMP) += cpupri.o
 +obj-$(CONFIG_SCHEDSTATS) += stats.o
-Index: linux-4.1-ck1/kernel/sched/bfs_sched.h
+Index: linux-4.1-ck2/kernel/sched/bfs_sched.h
 ===================================================================
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ linux-4.1-ck1/kernel/sched/bfs_sched.h	2015-08-02 19:51:24.902823582 +1000
++++ linux-4.1-ck2/kernel/sched/bfs_sched.h	2015-08-09 16:50:16.877987110 +1000
 @@ -0,0 +1,172 @@
 +#include <linux/sched.h>
 +#include <linux/cpuidle.h>
@@ -8707,10 +8698,10 @@ Index: linux-4.1-ck1/kernel/sched/bfs_sched.h
 +}
 +#endif
 +#endif /* BFS_SCHED_H */
-Index: linux-4.1-ck1/kernel/sched/stats.c
+Index: linux-4.1-ck2/kernel/sched/stats.c
 ===================================================================
---- linux-4.1-ck1.orig/kernel/sched/stats.c	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/kernel/sched/stats.c	2015-08-02 19:51:24.902823582 +1000
+--- linux-4.1-ck2.orig/kernel/sched/stats.c	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/kernel/sched/stats.c	2015-08-09 16:50:16.877987110 +1000
 @@ -4,7 +4,11 @@
  #include <linux/seq_file.h>
  #include <linux/proc_fs.h>
@@ -8723,10 +8714,10 @@ Index: linux-4.1-ck1/kernel/sched/stats.c
  
  /*
   * bump this up when changing the output format or the meaning of an existing
-Index: linux-4.1-ck1/arch/x86/Kconfig
+Index: linux-4.1-ck2/arch/x86/Kconfig
 ===================================================================
---- linux-4.1-ck1.orig/arch/x86/Kconfig	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/arch/x86/Kconfig	2015-08-02 19:51:25.471833630 +1000
+--- linux-4.1-ck2.orig/arch/x86/Kconfig	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/arch/x86/Kconfig	2015-08-09 16:52:58.555033709 +1000
 @@ -866,10 +866,26 @@ config SCHED_SMT
  	depends on X86_HT
  	---help---
@@ -8805,10 +8796,10 @@ Index: linux-4.1-ck1/arch/x86/Kconfig
  	---help---
  	  Enabling this option offlines CPU0 (if CPU0 can be offlined) as
  	  soon as possible and boots up userspace with CPU0 offlined. User
-Index: linux-4.1-ck1/include/linux/sched/prio.h
+Index: linux-4.1-ck2/include/linux/sched/prio.h
 ===================================================================
---- linux-4.1-ck1.orig/include/linux/sched/prio.h	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/include/linux/sched/prio.h	2015-08-02 19:51:24.902823582 +1000
+--- linux-4.1-ck2.orig/include/linux/sched/prio.h	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/include/linux/sched/prio.h	2015-08-09 16:50:16.877987110 +1000
 @@ -19,8 +19,20 @@
   */
  
@@ -8830,10 +8821,10 @@ Index: linux-4.1-ck1/include/linux/sched/prio.h
  #define MAX_PRIO		(MAX_RT_PRIO + NICE_WIDTH)
  #define DEFAULT_PRIO		(MAX_RT_PRIO + NICE_WIDTH / 2)
  
-Index: linux-4.1-ck1/drivers/cpufreq/intel_pstate.c
+Index: linux-4.1-ck2/drivers/cpufreq/intel_pstate.c
 ===================================================================
---- linux-4.1-ck1.orig/drivers/cpufreq/intel_pstate.c	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/drivers/cpufreq/intel_pstate.c	2015-08-02 19:51:24.902823582 +1000
+--- linux-4.1-ck2.orig/drivers/cpufreq/intel_pstate.c	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/drivers/cpufreq/intel_pstate.c	2015-08-09 16:50:16.877987110 +1000
 @@ -530,8 +530,13 @@ static void byt_set_pstate(struct cpudat
  	vid_fp = clamp_t(int32_t, vid_fp, cpudata->vid.min, cpudata->vid.max);
  	vid = ceiling_fp(vid_fp);
@@ -8850,10 +8841,10 @@ Index: linux-4.1-ck1/drivers/cpufreq/intel_pstate.c
  
  	val |= vid;
  
-Index: linux-4.1-ck1/kernel/sched/idle.c
+Index: linux-4.1-ck2/kernel/sched/idle.c
 ===================================================================
---- linux-4.1-ck1.orig/kernel/sched/idle.c	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/kernel/sched/idle.c	2015-08-02 19:51:24.903823600 +1000
+--- linux-4.1-ck2.orig/kernel/sched/idle.c	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/kernel/sched/idle.c	2015-08-09 16:50:16.878987104 +1000
 @@ -13,7 +13,11 @@
  
  #include <trace/events/power.h>
@@ -8866,10 +8857,10 @@ Index: linux-4.1-ck1/kernel/sched/idle.c
  
  static int __read_mostly cpu_idle_force_poll;
  
-Index: linux-4.1-ck1/kernel/time/posix-cpu-timers.c
+Index: linux-4.1-ck2/kernel/time/posix-cpu-timers.c
 ===================================================================
---- linux-4.1-ck1.orig/kernel/time/posix-cpu-timers.c	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/kernel/time/posix-cpu-timers.c	2015-08-02 19:51:24.903823600 +1000
+--- linux-4.1-ck2.orig/kernel/time/posix-cpu-timers.c	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/kernel/time/posix-cpu-timers.c	2015-08-09 16:50:16.878987104 +1000
 @@ -425,7 +425,7 @@ static void cleanup_timers(struct list_h
   */
  void posix_cpu_timers_exit(struct task_struct *tsk)
@@ -8915,10 +8906,10 @@ Index: linux-4.1-ck1/kernel/time/posix-cpu-timers.c
  		};
  
  		if (task_cputime_expired(&task_sample, &tsk->cputime_expires))
-Index: linux-4.1-ck1/kernel/trace/trace_selftest.c
+Index: linux-4.1-ck2/kernel/trace/trace_selftest.c
 ===================================================================
---- linux-4.1-ck1.orig/kernel/trace/trace_selftest.c	2015-08-02 19:51:24.905823635 +1000
-+++ linux-4.1-ck1/kernel/trace/trace_selftest.c	2015-08-02 19:51:24.903823600 +1000
+--- linux-4.1-ck2.orig/kernel/trace/trace_selftest.c	2015-08-09 16:50:16.879987098 +1000
++++ linux-4.1-ck2/kernel/trace/trace_selftest.c	2015-08-09 16:50:16.878987104 +1000
 @@ -1039,10 +1039,15 @@ static int trace_wakeup_test_thread(void
  {
  	/* Make this a -deadline thread */
@@ -8935,10 +8926,10 @@ Index: linux-4.1-ck1/kernel/trace/trace_selftest.c
  	};
  	struct wakeup_test_data *x = data;
  
-Index: linux-4.1-ck1/kernel/Kconfig.preempt
+Index: linux-4.1-ck2/kernel/Kconfig.preempt
 ===================================================================
---- linux-4.1-ck1.orig/kernel/Kconfig.preempt	2015-08-02 19:51:25.167828261 +1000
-+++ linux-4.1-ck1/kernel/Kconfig.preempt	2015-08-02 19:51:25.166828244 +1000
+--- linux-4.1-ck2.orig/kernel/Kconfig.preempt	2015-08-09 16:52:58.245035535 +1000
++++ linux-4.1-ck2/kernel/Kconfig.preempt	2015-08-09 16:52:58.243035547 +1000
 @@ -1,7 +1,7 @@
  
  choice
@@ -8967,10 +8958,10 @@ Index: linux-4.1-ck1/kernel/Kconfig.preempt
  
  config PREEMPT
  	bool "Preemptible Kernel (Low-Latency Desktop)"
-Index: linux-4.1-ck1/kernel/Kconfig.hz
+Index: linux-4.1-ck2/kernel/Kconfig.hz
 ===================================================================
---- linux-4.1-ck1.orig/kernel/Kconfig.hz	2015-08-02 19:51:25.269830063 +1000
-+++ linux-4.1-ck1/kernel/Kconfig.hz	2015-08-02 19:51:25.368831811 +1000
+--- linux-4.1-ck2.orig/kernel/Kconfig.hz	2015-08-09 16:52:58.349034922 +1000
++++ linux-4.1-ck2/kernel/Kconfig.hz	2015-08-09 16:52:58.450034327 +1000
 @@ -4,7 +4,7 @@
  
  choice
@@ -9019,15 +9010,15 @@ Index: linux-4.1-ck1/kernel/Kconfig.hz
  	default 300 if HZ_300
  	default 1000 if HZ_1000
  
-Index: linux-4.1-ck1/Makefile
+Index: linux-4.1-ck2/Makefile
 ===================================================================
---- linux-4.1-ck1.orig/Makefile	2015-08-02 19:51:25.575835467 +1000
-+++ linux-4.1-ck1/Makefile	2015-08-02 19:51:25.574835449 +1000
+--- linux-4.1-ck2.orig/Makefile	2015-08-09 16:52:58.669033037 +1000
++++ linux-4.1-ck2/Makefile	2015-08-09 16:53:07.463981221 +1000
 @@ -10,6 +10,10 @@ NAME = Hurr durr I'ma sheep
  # Comments in this file are targeted only to the developer, do not
  # expect to learn how to build the kernel reading this file.
  
-+CKVERSION = -ck1
++CKVERSION = -ck2
 +CKNAME = BFS Powered
 +EXTRAVERSION := $(EXTRAVERSION)$(CKVERSION)
 +
