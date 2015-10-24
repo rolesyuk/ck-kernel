@@ -111,6 +111,12 @@ fi
 
 yes "" | make oldconfig > /dev/null
 
+echo "Setting compilation flags ..."
+sed -i -e 's/cflags-$(CONFIG_GENERIC_CPU) += $(call cc-option,-mtune=generic)/cflags-$(CONFIG_GENERIC_CPU) += $(call cc-option,-march=native)/' \
+    arch/x86/Makefile
+sed -i -e 's/$(call cc-option,-march=k8)/$(call cc-option,-march=native)/' arch/x86/Makefile
+sed -i -e 's/$(call cc-option,-march=core2,$(call cc-option,-mtune=generic))/$(call cc-option,-march=native)/' arch/x86/Makefile
+
 make menuconfig
 
 rm .config.old
