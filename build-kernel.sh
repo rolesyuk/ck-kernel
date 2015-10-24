@@ -3,14 +3,14 @@
 #DEPENDENCIES="kernel-package libncurses5 libncurses5-dev build-essential patch fakeroot bc"
 
 KERNEL_MAJOR="4.1"
-KERNEL_MINOR="10"
+KERNEL_MINOR="11"
 BFS="ck2"
 BFQ="v7r8"
 PREEMPT_RT=
 
 #CROSS_COMPILER_PREFIX=$(readlink -f $(dirname $0)/gcc-linaro-4.9-2014.11-x86_64_arm-linux-gnueabihf/bin)/arm-linux-gnueabihf-
 
-CONFIG="config-3.19.0-30-generic"
+CONFIG="config-3.19.0-31-generic"
 
 big_echo() {
 	echo
