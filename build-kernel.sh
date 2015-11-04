@@ -25,7 +25,7 @@ wget -nc "https://www.kernel.org/pub/linux/kernel/v4.x/linux-${KERNEL_MAJOR}.${K
 if [ -n "${BFS}" ]; then
 	big_echo "Downloading BFS patches ..."
 	wget -nc "http://ck.kolivas.org/patches/4.0/${KERNEL_MAJOR}/${KERNEL_MAJOR}-${BFS}/patch-${KERNEL_MAJOR}-${BFS}.bz2" || exit 1
-        wget -nc "https://raw.githubusercontent.com/hhoffstaette/kernel-patches/master/4.1/bfs-009-add-preempt_offset-argument-to-should_resched%28%29.patch" > -O \
+        wget -nc "https://raw.githubusercontent.com/hhoffstaette/kernel-patches/master/4.1/bfs-009-add-preempt_offset-argument-to-should_resched%28%29.patch" -O \
             bfs-009-add-preempt_offset-argument-to-should_resched.patch || exit 1
 fi
 
