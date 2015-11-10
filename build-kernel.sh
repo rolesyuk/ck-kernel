@@ -10,7 +10,7 @@ PREEMPT_RT=
 
 #CROSS_COMPILER_PREFIX=$(readlink -f $(dirname $0)/gcc-linaro-4.9-2014.11-x86_64_arm-linux-gnueabihf/bin)/arm-linux-gnueabihf-
 
-CONFIG="config-3.19.0-31-generic"
+CONFIG="config-3.19.0-33-generic"
 
 big_echo() {
 	echo
