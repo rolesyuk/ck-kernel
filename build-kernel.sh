@@ -3,7 +3,7 @@
 #DEPENDENCIES="kernel-package libncurses5 libncurses5-dev build-essential patch fakeroot bc"
 
 KERNEL_MAJOR="4.1"
-KERNEL_MINOR="12"
+KERNEL_MINOR="13"
 BFS="ck2"
 BFQ="v7r8"
 PREEMPT_RT=
