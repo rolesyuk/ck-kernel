@@ -6,7 +6,7 @@ KERNEL_VERSION=`basename $(pwd) | awk -F '-' '{print $2}'`
 KERNEL_MAJOR=`echo ${KERNEL_VERSION} | awk -F '.' '{print $1 "." $2}'`
 KERNEL_MINOR=`echo ${KERNEL_VERSION} | awk -F '.' '{print $3}'`
 if [ -n "${KERNEL_MINOR}" ]; then
-    KERNEL_MINOR=".${KERNEL_MINOR}"
+	KERNEL_MINOR=".${KERNEL_MINOR}"
 fi
 BFS=`basename $(pwd) | awk -F '-' '{print $3}'`
 BFQ="v7r8"
@@ -30,10 +30,10 @@ if [ -n "${BFS}" ]; then
 	big_echo "Downloading BFS patches ..."
 	wget -nc "http://ck.kolivas.org/patches/4.0/${KERNEL_MAJOR}/${KERNEL_MAJOR}-${BFS}/patch-${KERNEL_MAJOR}-${BFS}.bz2" || 
 	wget -nc "http://ck.kolivas.org/patches/4.0/${KERNEL_MAJOR}/${KERNEL_MAJOR}-${BFS}/patch-${KERNEL_MAJOR}-${BFS}.xz" || exit 1
-        if [ "${KERNEL_MAJOR}" == "4.1" -a "${BFS}" == "ck2" ]; then
-            wget -nc "https://raw.githubusercontent.com/hhoffstaette/kernel-patches/master/4.1/bfs-009-add-preempt_offset-argument-to-should_resched%28%29.patch" -O \
-                bfs-009-add-preempt_offset-argument-to-should_resched.patch || exit 1
-        fi
+	if [ "${KERNEL_MAJOR}" == "4.1" -a "${BFS}" == "ck2" ]; then
+		wget -nc "https://raw.githubusercontent.com/hhoffstaette/kernel-patches/master/4.1/bfs-009-add-preempt_offset-argument-to-should_resched%28%29.patch" -O \
+			bfs-009-add-preempt_offset-argument-to-should_resched.patch || exit 1
+	fi
 fi
 
 big_echo "Downloading BFQ patches ..."
@@ -54,23 +54,26 @@ rm "linux-${KERNEL_MAJOR}${KERNEL_MINOR}.tar"
 
 big_echo "Uncompresing patches ..."
 if [ -n "${BFS}" ]; then
-    if [ -r "patch-${KERNEL_MAJOR}-${BFS}.xz" ]; then
-	xz -d patch-${KERNEL_MAJOR}-${BFS}.xz
-    elif [ -r "patch-${KERNEL_MAJOR}-${BFS}.bz2" ]; then
-	bzip2 -d patch-${KERNEL_MAJOR}-${BFS}.bz2
-    else
-        exit 1
-    fi
-
+	if [ -r "patch-${KERNEL_MAJOR}-${BFS}.xz" ]; then
+		xz -d patch-${KERNEL_MAJOR}-${BFS}.xz
+	elif [ -r "patch-${KERNEL_MAJOR}-${BFS}.bz2" ]; then
+		bzip2 -d patch-${KERNEL_MAJOR}-${BFS}.bz2
+	else
+		exit 1
+	fi
 	mv patch-${KERNEL_MAJOR}-${BFS} patch-${KERNEL_MAJOR}-${BFS}.patch
 fi
 if [ -n "${PREEMPT_RT}" ]; then
 	xz -d patch-${KERNEL_MAJOR}${KERNEL_MINOR}-${PREEMPT_RT}.patch.xz
 fi
 
-PATCHES="../000*.patch"
+PATCHES=
+BFQ_PATCHES=`ls 000*.patch`
+for BFQ_PATCH in ${BFQ_PATCHES}; do
+	PATCHES="${PATCHES} ../${BFQ_PATCH}"
+done
 if [ -r "../bfs-009-add-preempt_offset-argument-to-should_resched.patch" ]; then
-    PATCHES="${PATCHES} ../bfs-009-add-preempt_offset-argument-to-should_resched.patch"
+	PATCHES="${PATCHES} ../bfs-009-add-preempt_offset-argument-to-should_resched.patch"
 fi
 if [ -n "${BFS}" ]; then
 	PATCHES="../patch-${KERNEL_MAJOR}-${BFS}.patch ${PATCHES}"
@@ -82,6 +85,11 @@ if [ -n "${PREEMPT_RT}" -a -n "${BFS}" ]; then
 	big_echo "Applying patch for BFS patch ..."
 	patch -p0 < patch-${KERNEL_MAJOR}-${BFS}.patch.rt
 fi
+
+for PATCH in ${PATCHES}; do
+	PATCH=`basename ${PATCH}`
+	diff ${PATCH} ../patches/${PATCH} || exit 1
+done
 
 (cd linux-${KERNEL_MAJOR}${KERNEL_MINOR}
 for PATCH in ${PATCHES}; do
@@ -131,7 +139,7 @@ yes "" | make oldconfig > /dev/null
 
 echo "Setting compilation flags ..."
 sed -i -e 's/cflags-$(CONFIG_GENERIC_CPU) += $(call cc-option,-mtune=generic)/cflags-$(CONFIG_GENERIC_CPU) += $(call cc-option,-march=native)/' \
-    arch/x86/Makefile
+	arch/x86/Makefile
 sed -i -e 's/$(call cc-option,-march=k8)/$(call cc-option,-march=native)/' arch/x86/Makefile
 sed -i -e 's/$(call cc-option,-march=core2,$(call cc-option,-mtune=generic))/$(call cc-option,-march=native)/' arch/x86/Makefile
 
@@ -144,6 +152,7 @@ sudo sh -c "CONCURRENCY_LEVEL=$((`grep -c '^processor' /proc/cpuinfo`+1)) \
 	fakeroot make-kpkg --initrd kernel_image kernel_headers modules_image; \
 	cd ..; \
 	rm -r linux-${KERNEL_MAJOR}${KERNEL_MINOR}"
+	rm *.patch
 
 # ARM cross-compilation stuff
 #	fakeroot make-kpkg --arch arm --cross-compile ${CROSS_COMPILER_PREFIX} --initrd \
