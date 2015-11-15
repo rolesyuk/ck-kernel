@@ -72,7 +72,7 @@ BFQ_PATCHES=`ls 000*.patch`
 for BFQ_PATCH in ${BFQ_PATCHES}; do
 	PATCHES="${PATCHES} ../${BFQ_PATCH}"
 done
-if [ -r "../bfs-009-add-preempt_offset-argument-to-should_resched.patch" ]; then
+if [ -r "bfs-009-add-preempt_offset-argument-to-should_resched.patch" ]; then
 	PATCHES="${PATCHES} ../bfs-009-add-preempt_offset-argument-to-should_resched.patch"
 fi
 if [ -n "${BFS}" ]; then
@@ -151,8 +151,8 @@ big_echo "Compiling kernel ..."
 sudo sh -c "CONCURRENCY_LEVEL=$((`grep -c '^processor' /proc/cpuinfo`+1)) \
 	fakeroot make-kpkg --initrd kernel_image kernel_headers modules_image; \
 	cd ..; \
-	rm -r linux-${KERNEL_MAJOR}${KERNEL_MINOR}"
-	rm *.patch
+	rm -r linux-${KERNEL_MAJOR}${KERNEL_MINOR}
+	rm *.patch"
 
 # ARM cross-compilation stuff
 #	fakeroot make-kpkg --arch arm --cross-compile ${CROSS_COMPILER_PREFIX} --initrd \
