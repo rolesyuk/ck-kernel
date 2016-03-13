@@ -31,8 +31,7 @@ if [ -n "${BFS}" ]; then
 	wget -nc "http://ck.kolivas.org/patches/4.0/${KERNEL_MAJOR}/${KERNEL_MAJOR}-${BFS}/patch-${KERNEL_MAJOR}-${BFS}.bz2" || 
 	wget -nc "http://ck.kolivas.org/patches/4.0/${KERNEL_MAJOR}/${KERNEL_MAJOR}-${BFS}/patch-${KERNEL_MAJOR}-${BFS}.xz" || exit 1
 	if [ "${KERNEL_MAJOR}" == "4.1" -a "${BFS}" == "ck2" ]; then
-		wget -nc "https://raw.githubusercontent.com/hhoffstaette/kernel-patches/master/4.1/bfs-009-add-preempt_offset-argument-to-should_resched%28%29.patch" -O \
-			bfs-009-add-preempt_offset-argument-to-should_resched.patch || exit 1
+		cp ../patches/bfs-009-add-preempt_offset-argument-to-should_resched.patch . || exit 1
 	fi
 fi
 
