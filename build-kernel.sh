@@ -9,7 +9,7 @@ if [ -n "${KERNEL_MINOR}" ]; then
 	KERNEL_MINOR=".${KERNEL_MINOR}"
 fi
 BFS=`basename $(pwd) | awk -F '-' '{print $3}'`
-BFQ="v7r11"
+BFQ=
 PREEMPT_RT=
 
 #CROSS_COMPILER_PREFIX=$(readlink -f $(dirname $0)/gcc-linaro-4.9-2014.11-x86_64_arm-linux-gnueabihf/bin)/arm-linux-gnueabihf-
@@ -35,10 +35,12 @@ if [ -n "${BFS}" ]; then
 	fi
 fi
 
-big_echo "Downloading BFQ patches ..."
-wget -nc -nd --no-parent --level 1 -r -R "*.html*" -R "${KERNEL_MAJOR}.0-${BFQ}" -R "*.BFQ" \
-	"http://algo.ing.unimo.it/people/paolo/disk_sched/patches/${KERNEL_MAJOR}.0-${BFQ}" || exit 1
-rm robots.txt
+if [ -n "${BFQ}" ]; then
+	big_echo "Downloading BFQ patches ..."
+	wget -nc -nd --no-parent --level 1 -r -R "*.html*" -R "${KERNEL_MAJOR}.0-${BFQ}" -R "*.BFQ" \
+		"http://algo.ing.unimo.it/people/paolo/disk_sched/patches/${KERNEL_MAJOR}.1-${BFQ}"
+	rm robots.txt
+fi
 
 if [ -n "${PREEMPT_RT}" ]; then
 	big_echo "Downloading PREEMPT_RT patches ..."
@@ -67,10 +69,12 @@ if [ -n "${PREEMPT_RT}" ]; then
 fi
 
 PATCHES=
-BFQ_PATCHES=`ls 000*.patch`
-for BFQ_PATCH in ${BFQ_PATCHES}; do
-	PATCHES="${PATCHES} ../${BFQ_PATCH}"
-done
+if [ -n "${BFQ}" ]; then
+	BFQ_PATCHES=`ls 000*.patch`
+	for BFQ_PATCH in ${BFQ_PATCHES}; do
+		PATCHES="${PATCHES} ../${BFQ_PATCH}"
+	done
+fi
 if [ -r "bfs-009-add-preempt_offset-argument-to-should_resched.patch" ]; then
 	PATCHES="${PATCHES} ../bfs-009-add-preempt_offset-argument-to-should_resched.patch"
 fi
@@ -108,14 +112,16 @@ cd linux-${KERNEL_MAJOR}${KERNEL_MINOR}
 
 yes "" | make oldconfig > /dev/null
 
-echo "Setting up BFQ in config ..."
-sed -i -e 's/^# CONFIG_IOSCHED_BFQ is not set/CONFIG_IOSCHED_BFQ=y/'           \
-    -i -e 's/^CONFIG_IOSCHED_NOOP=y/# CONFIG_IOSCHED_NOOP is not set/'           \
-    -i -e 's/^CONFIG_IOSCHED_DEADLINE=y/# CONFIG_IOSCHED_DEADLINE is not set/'           \
-    -i -e 's/^CONFIG_IOSCHED_CFQ=y/# CONFIG_IOSCHED_CFQ is not set/'           \
-    -i -e 's/^CONFIG_DEFAULT_IOSCHED="cfq"/CONFIG_DEFAULT_IOSCHED="bfq"/'      \
-    -i -e 's/^CONFIG_DEFAULT_IOSCHED="deadline"/CONFIG_DEFAULT_IOSCHED="bfq"/' \
-    -i -e 's/^CONFIG_DEFAULT_IOSCHED="noop"/CONFIG_DEFAULT_IOSCHED="bfq"/' .config
+if [ -n "${BFQ}" ]; then
+	echo "Setting up BFQ in config ..."
+	sed -i -e 's/^# CONFIG_IOSCHED_BFQ is not set/CONFIG_IOSCHED_BFQ=y/'           \
+	    -i -e 's/^CONFIG_IOSCHED_NOOP=y/# CONFIG_IOSCHED_NOOP is not set/'           \
+	    -i -e 's/^CONFIG_IOSCHED_DEADLINE=y/# CONFIG_IOSCHED_DEADLINE is not set/'           \
+	    -i -e 's/^CONFIG_IOSCHED_CFQ=y/# CONFIG_IOSCHED_CFQ is not set/'           \
+	    -i -e 's/^CONFIG_DEFAULT_IOSCHED="cfq"/CONFIG_DEFAULT_IOSCHED="bfq"/'      \
+	    -i -e 's/^CONFIG_DEFAULT_IOSCHED="deadline"/CONFIG_DEFAULT_IOSCHED="bfq"/' \
+	    -i -e 's/^CONFIG_DEFAULT_IOSCHED="noop"/CONFIG_DEFAULT_IOSCHED="bfq"/' .config
+fi
 
 echo "Setting up CONFIG_HZ=1000 in config ..."
 sed -i -e 's/^CONFIG_HZ_300=y/# CONFIG_HZ_300 is not set/'   \
