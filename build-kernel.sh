@@ -140,6 +140,8 @@ else
 	sed -i -e 's/^# CONFIG_PREEMPT is not set/CONFIG_PREEMPT=y/' .config
 fi
 
+sed -i -e 's/^CONFIG_DEBUG_INFO=y/# CONFIG_DEBUG_INFO is not set/'                     \
+
 yes "" | make oldconfig > /dev/null
 
 echo "Setting compilation flags ..."
@@ -153,8 +155,7 @@ make menuconfig
 rm .config.old
 
 big_echo "Compiling kernel ..."
-sudo sh -c "CONCURRENCY_LEVEL=$((`grep -c '^processor' /proc/cpuinfo`+1)) \
-	fakeroot make-kpkg --initrd kernel_image kernel_headers modules_image; \
+sudo sh -c "make -j$((`grep -c '^processor' /proc/cpuinfo`+1)) deb-pkg; \
 	cd ..; \
 	rm -r linux-${KERNEL_MAJOR}${KERNEL_MINOR}
 	rm *.patch"
