@@ -140,7 +140,7 @@ else
 	sed -i -e 's/^# CONFIG_PREEMPT is not set/CONFIG_PREEMPT=y/' .config
 fi
 
-sed -i -e 's/^CONFIG_DEBUG_INFO=y/# CONFIG_DEBUG_INFO is not set/'                     \
+sed -i -e 's/^CONFIG_DEBUG_INFO=y/# CONFIG_DEBUG_INFO is not set/' .config
 
 yes "" | make oldconfig > /dev/null
 
